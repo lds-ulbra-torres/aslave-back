@@ -26,7 +26,7 @@
 
 ##Funções
 * Nome do método não deve conter o nome da classe na qual ele se aplica
-* Receber paremetro da rota pelo metodo do controller ex: function buscaCep($param) {}
+* Receber paremetro da rota pelo metodo do controller ex: function buscaCep(param) {}
 * Reutilizar o maximo de funções possiveis
 * Dividir arquivos por modulos do sistema
 
@@ -34,7 +34,7 @@
 * Comentar códigos. Formato: data, autor e comentario
 * Estilo de comentário: 
 * /**
-*  * @author Gabriel - 10-10-2016 - Validação de Cep
+*  * @author Joziel - 10-10-2018 - Validação de Cep
 *  * @param cpf - O cpf que será validado
 *  * @return - se o cpf é válido ou não
 *  */
