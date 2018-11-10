@@ -4,6 +4,6 @@ module.exports = {
     },
     error (res, error = {}, msg = "Ocorreu um erro" ){
         console.log(error)
-        res.status(400).json({status: 400, msg: msg , obj: {}})
+        res.status(400).json({status: 400, msg: msg , obj: {error}})
     }
 }
