@@ -6,6 +6,7 @@ import cors from 'cors'
 const router = Router()
 // Cross-Origin Resource Sharing  ( CORS ) 
 router.use(cors())
+// Form-Data
 router.use(multer().any())
 // Cotrollers
 import {  
