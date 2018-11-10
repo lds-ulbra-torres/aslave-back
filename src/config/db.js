@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize'
-import autoLoadModel from '../src/helpers/auto-load-model'
+import autoLoadModel from '../helpers/auto-load-model'
+import config from './config'
 
 let db = null
 
-module.exports = app => {
+module.exports = () => {
   if (!db) {
-    const config = app.config.config
     const sequelize = new Sequelize(
       config.database,
       config.username,
@@ -18,6 +18,8 @@ module.exports = app => {
       models: {}
     }
     db.models = autoLoadModel(sequelize)
+    // Apenas para desenvolvimento
+    sequelize.sync().done(() => db)
   }
   
   return db
