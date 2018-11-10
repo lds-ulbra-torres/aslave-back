@@ -8,7 +8,7 @@ consign({verbose: false})
     .then("config/db.js")
     .then("./src/auth.js")
     .then("config/middlewares.js")
-    .then("./src/routes")
+    .then(".routes")
     .into(app);
 
 module.exports = app
