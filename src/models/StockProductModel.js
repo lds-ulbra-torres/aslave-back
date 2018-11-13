@@ -33,7 +33,7 @@ export default (sequelize, DataType) => {
       id_group: {
         type: DataType.INTEGER(11),
         references: {
-          model: sequelize.models.stock_product_group,
+          model: 'stock_product_groups',
           key: 'id_group',
         },
         allowNull: false,

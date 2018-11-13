@@ -1,21 +1,23 @@
 export default (sequelize, DataType) => {
     const StockInput = sequelize.define('stock_input_products', {
       id_product: {
-            type: DataType.INTEGER(11),
-            references: {
-              model: sequelize.models.stock_product,
-              key: 'id_people',
-            },
-            allowNull: false,
-            validate: {
-              notEmpty: true,
-            },
+        type: DataType.INTEGER(11),
+        primaryKey: true,
+        references: {
+          model: 'stock_products',
+          key: 'id_product',
+        },
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
       id_stock: {
         type: DataType.INTEGER(11),
+        primaryKey: true,
         references: {
-          model: sequelize.models.stock_input,
-          key: 'id_people',
+          model: 'stock_input',
+          key: 'id_stock',
         },
         allowNull: false,
         validate: {
@@ -37,7 +39,7 @@ export default (sequelize, DataType) => {
         },
       },
     },{
-        tableName: 'stock_output',
+        tableName: 'stock_input_products',
         createdAt: false,
         updatedAt: false
     })

@@ -30,7 +30,7 @@ export default (sequelize, DataType) => {
       id_people: {
         type: DataType.INTEGER(11),
         references: {
-          model: sequelize.models.people,
+          model: 'people',
           key: 'id_people',
         },
         allowNull: false,
