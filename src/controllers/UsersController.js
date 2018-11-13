@@ -26,9 +26,12 @@ export const UsersController  = {
     },
 
     update (req, res) {
-        UserModel.update(req.body, { where : { id_user : req.params.id} })
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
+        if(req.body.id_user)
+            error(res, {}, 'conteins id_user')
+        else
+            UserModel.update(req.body, { where : { id_user : req.params.id} })
+            .then( result => response(res, result) )
+            .catch( erro => error(res, erro) )
     },
 
     delete (req, res) {

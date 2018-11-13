@@ -16,7 +16,7 @@ export default (sequelize, DataType) => {
           notEmpty: true,
         },
       },
-      unit_prince: {
+      unit_price: {
         type: DataType.DECIMAL(18,2),
         allowNull: false,
         validate: {
@@ -46,6 +46,25 @@ export default (sequelize, DataType) => {
         createdAt: false,
         updatedAt: false
     })
+    StockProduct.belongsTo(sequelize.models.stock_product_groups, {foreignKey : 'id_group', targetKey:'id_group' })
+    StockProduct.getAll = () => {
+      return StockProduct.findAll({ 
+        include : [{
+          model: sequelize.models.stock_product_groups,
+          attributes: [['name_group', 'name'], 'id_group'],
+        }] 
+      })
+    }
+    StockProduct.getById = id_product => {
+      return StockProduct.findAll({ 
+        where : { id_product },
+        include : [{
+          model: sequelize.models.stock_product_groups,
+          attributes: [['name_group', 'name'], 'id_group'],
+        }] 
+      })
+    }
+    StockProduct.belongsTo(sequelize.models.stock_product_groups, {foreignKey : 'id_group', targetKey:'id_group' })
     return StockProduct
   }
   

@@ -24,7 +24,7 @@ export default (sequelize, DataType) => {
           notEmpty: true,
         },
       },
-      unit_prince_input: {
+      unit_price_input: {
         type: DataType.DECIMAL(18,2),
         allowNull: false,
         validate: {

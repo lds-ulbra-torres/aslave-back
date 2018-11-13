@@ -14,6 +14,8 @@ router.use(multer().any())
 // Cotrollers
 import {  
     UsersController,
+    ProductsController,
+    GroupProductsController
 } from './controllers'
 
 // EndPoints
@@ -29,5 +31,18 @@ router.get('/user/:id', UsersController.get)
 router.post('/user', UsersController.store)
 router.put('/user/:id', UsersController.update)
 router.delete('/user/:id', UsersController.delete)
+// Routes products
+router.get('/product', ProductsController.index)
+router.get('/product/:id', ProductsController.get)
+router.post('/product', ProductsController.store)
+router.put('/product/:id', ProductsController.update)
+router.delete('/product/:id', ProductsController.delete)
+router.get('/product-category/:id', ProductsController.getByCategory)
+// Routes Group or categorys
+router.get('/category', GroupProductsController.index)
+router.get('/category/:id', GroupProductsController.get)
+router.post('/category', GroupProductsController.store)
+router.put('/category/:id', GroupProductsController.update)
+router.delete('/category/:id', GroupProductsController.delete)
 
 module.exports = router

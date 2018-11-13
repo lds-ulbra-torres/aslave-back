@@ -19,11 +19,8 @@ module.exports = () => {
             attributes: ['id_user'],            
         })
         .then( user => {
-            user = {
-                id : user.id_user,
-            }
             if (user)
-                return done(null, user)
+                return done(null, user = { id : user.id_user })
             else
                 return done(null, false)
         })
