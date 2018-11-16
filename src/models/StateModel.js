@@ -2,7 +2,7 @@ export default (sequelize, DataType) => {
 
     const States = sequelize.define('states', {
         id_states: {
-            type: DataType.INTEGER(2),
+            type: DataType.INTEGER(11),
             primaryKey: true,
             autoIncremnt: true,
             allowNull: false,
@@ -11,7 +11,7 @@ export default (sequelize, DataType) => {
             },
         },
         UF: {
-            type: DataType.STRING(10),
+            type: DataType.STRING(2),
             allowNull: false,
             validate: {
                 notEmpty: true,

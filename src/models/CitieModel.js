@@ -25,7 +25,7 @@ export default (sequelize, Datatype) => {
         },
 
         name: {
-            type: Datatype.STRING(20),
+            type: DataType.STRING(20),
             allowNull: false,
             validate: {
                 notEmpty: true,
@@ -39,5 +39,5 @@ export default (sequelize, Datatype) => {
     })
 
     return Cities
-    
+
 }
