@@ -1,7 +1,7 @@
-export default (sequelize, Datatype) => {
+export default (sequelize, DataType) => {
     const Cities = sequelize.define('cities', {
         id_cities: {
-            type: Datatype.INTEGER(4),
+            type: DataType.INTEGER(4),
             primaryKey: true,
             autoIncrement: true,
             allowNull: false,
@@ -10,7 +10,7 @@ export default (sequelize, Datatype) => {
             },
         },
         id_states: {
-            type: Datatype.INTEGER(11),allowNull: false,
+            type: DataType.INTEGER(11),allowNull: false,
             validate: {
                 notEmpty: true,
             },
@@ -21,7 +21,7 @@ export default (sequelize, Datatype) => {
         },
 
         uf: {
-            type: Datatype.STRING(2),
+            type: DataType.STRING(2),
         },
 
         name: {

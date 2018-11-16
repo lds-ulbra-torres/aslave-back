@@ -1,6 +1,6 @@
 export * from './UsersController'
 export * from './ProductsController'
 export * from './GroupProductsController'
-export * from './PeopleControllers'
+export * from './PeoplesControllers'
 export * from './CitiesController'
 export * from './StateController'

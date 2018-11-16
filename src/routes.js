@@ -18,7 +18,7 @@ import {
     GroupProductsController,
     PeopleControllers,
     CitiesController,
-    StateController
+    StatesController
 } from './controllers'
 
 // EndPoints
@@ -60,7 +60,7 @@ router.get('/cities', CitiesController.index)
 router.post('/cities', CitiesController.store)
 
 //States
-router.get('/states', StateController.index)
-router.post('/states', StateController.store)
+router.get('/states', StatesController.index)
+router.post('/states', StatesController.store)
 
 module.exports = router
