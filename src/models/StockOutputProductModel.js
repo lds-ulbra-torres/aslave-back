@@ -1,5 +1,14 @@
 export default (sequelize, DataType) => {
   const StockOutput = sequelize.define('stock_output_products', {
+    id_stock: {
+      type: DataType.INTEGER(20),
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
     id_product: {
       type: DataType.INTEGER(20),
       primaryKey: true,
@@ -8,9 +17,8 @@ export default (sequelize, DataType) => {
         notEmpty: true,
       },
     },
-    id_stock: {
+    id_user: {
       type: DataType.INTEGER(20),
-      primaryKey: true,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -30,12 +38,23 @@ export default (sequelize, DataType) => {
         notEmpty: true,
       },
     },
+    unit_measurement: {
+      type: DataType.INTEGER(),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    description: {
+      type: DataType.STRING(),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    }
   },{
       tableName: 'stock_output_products',
-      createdAt: false,
       updatedAt: false
   })
-  sequelize.models.people.hasOne(StockOutput, {foreignKey : 'id_product', targetKey:'id_product' })
-  sequelize.models.stock_output.hasOne(StockOutput, {foreignKey : 'id_stock', targetKey:'id_stock' })
   return StockOutput
 }

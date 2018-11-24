@@ -43,6 +43,8 @@ export default (sequelize, DataType) => {
         where : { login, password }
       })
     }
+    User.hasMany(sequelize.models.stock_output_products,  {foreignKey : 'id_user', targetKey:'id_user' })
+    sequelize.models.stock_output_products.belongsTo(User,  {foreignKey : 'id_user', targetKey:'id_user' })
     return User
   }
   

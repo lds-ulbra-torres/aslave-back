@@ -17,6 +17,7 @@ import {
     ProductsController,
     GroupProductsController,
     InputStocksController,
+    OutputStocksController,
     PeopleControllers,
     CitiesController,
     StatesController
@@ -58,6 +59,13 @@ router.get('/stock-input/:id', InputStocksController.get)
 router.post('/stock-input', InputStocksController.store)
 router.put('/stock-input/:id', InputStocksController.update)
 router.delete('/stock-input/:id', InputStocksController.delete)
+
+// Routes Output Stock
+router.get('/stock-output', OutputStocksController.index)
+router.get('/stock-output/:id', OutputStocksController.get)
+router.post('/stock-output', OutputStocksController.store)
+router.put('/stock-output/:id', OutputStocksController.update)
+router.delete('/stock-output/:id', OutputStocksController.delete)
 
 //People
 router.get('/people', PeopleControllers.index)
