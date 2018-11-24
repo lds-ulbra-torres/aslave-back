@@ -1,7 +1,7 @@
 import db from '../config/db'
 import { response, error } from './API'
 
-const StatesModel = db().models.States;
+const StatesModel = db().models.states;
 
 export const StatesController = {
 

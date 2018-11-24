@@ -16,6 +16,7 @@ import {
     UsersController,
     ProductsController,
     GroupProductsController,
+    InputStocksController,
     PeopleControllers,
     CitiesController,
     StatesController
@@ -26,7 +27,7 @@ router.get("/", (req,res) => res.send("Hello world") )
 // Route authentication
 router.post('/auth', UsersController.validate)
 // Middlewares authentication routes
-router.use(auth.authenticate())
+ router.use(auth.authenticate())
 // Route users
 
 //User
@@ -50,6 +51,13 @@ router.get('/category/:id', GroupProductsController.get)
 router.post('/category', GroupProductsController.store)
 router.put('/category/:id', GroupProductsController.update)
 router.delete('/category/:id', GroupProductsController.delete)
+
+// Routes Input Stock
+router.get('/stock-input', InputStocksController.index)
+router.get('/stock-input/:id', InputStocksController.get)
+router.post('/stock-input', InputStocksController.store)
+router.put('/stock-input/:id', InputStocksController.update)
+router.delete('/stock-input/:id', InputStocksController.delete)
 
 //People
 router.get('/people', PeopleControllers.index)

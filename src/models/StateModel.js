@@ -28,7 +28,7 @@ export default (sequelize, DataType) => {
     }, {
             tableName: 'states',
             createdAt: false,
-            updateAt: false
+            updatedAt: false
         })
 
     return States;
