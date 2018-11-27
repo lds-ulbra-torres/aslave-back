@@ -18,9 +18,6 @@ BEGIN
 		SELECT sum(unit_price_output * amount_output) INTO sum
 		FROM stock_output_products 
 		WHERE id_stock = pid_stock;
-		
-		UPDATE stock_output  SET sum_value = sum WHERE id_stock = pid_stock;
-		
 	
 END ;;
 

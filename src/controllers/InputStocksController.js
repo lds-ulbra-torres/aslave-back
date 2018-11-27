@@ -6,7 +6,10 @@ const  StockInputModel = db().models.stock_input
 export const InputStocksController  = {
     
     index (req, res) {
-        StockInputModel.findAll()
+        StockInputModel.findAll({ include: [{
+            model: db().models.people,
+            attributes: ['name']
+        }] })
         .then( result => response(res, result) )
         .catch( erro => error(res, erro) )
     },
