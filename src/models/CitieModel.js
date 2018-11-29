@@ -35,7 +35,7 @@ export default (sequelize, DataType) => {
     },{
         tableName: 'cities',
         createdAt: false,
-        updatedAt: false
+        updateAt: false
     })
 
     return Cities

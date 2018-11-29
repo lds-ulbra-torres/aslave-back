@@ -1,5 +1,5 @@
 export default (sequelize, DataType) => {
-    const StockInput = sequelize.define('stock_input', {
+    const StockOutput = sequelize.define('stock_output', {
       id_stock: {
         type: DataType.INTEGER(20),
         primaryKey: true,
@@ -9,15 +9,8 @@ export default (sequelize, DataType) => {
           notEmpty: true,
         },
       },
-      input_date: {
+      output_date: {
         type: DataType.DATE(),
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
-      },
-      input_type: {
-        type: DataType.INTEGER(11),
         allowNull: false,
         validate: {
           notEmpty: true,
@@ -25,6 +18,10 @@ export default (sequelize, DataType) => {
       },
       sum_value: {
         type: DataType.DECIMAL(18,2),
+        defaultValue:0.0
+      },
+      description: {
+        type: DataType.STRING(),
         defaultValue:null
       },
       id_people: {
@@ -39,10 +36,10 @@ export default (sequelize, DataType) => {
         },
     }
     },{
-        tableName: 'stock_input',
+        tableName: 'stock_output',
         createdAt: false,
         updatedAt: false
     })
-    return StockInput
+    return StockOutput
   }
   

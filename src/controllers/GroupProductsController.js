@@ -32,9 +32,10 @@ export const GroupProductsController  = {
     },
 
     delete (req, res) {
-        GroupProductModel.destroy({ where : { id_group : req.params.id} })
+        GroupProductModel.destroy({ where : { id_group : req.params.id} }
         .then( result => response(res, result) )
         .catch( erro => error(res, erro) )
+        )
     },
 }
 
