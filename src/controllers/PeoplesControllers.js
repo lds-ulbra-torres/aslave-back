@@ -13,7 +13,7 @@ export const PeopleControllers = {
 
     store (req, res) {
         PeopleModel.create(req.body)
-        .then( result => response(res,result)
+        .then( result => response(res,erro)
          )
          .catch( erro => error(res,erro) )
     }

@@ -18,58 +18,68 @@ export default (sequelize, DataType) => {
         },
         cpf_cnpj:{
             type: DataType.DECIMAL(11, 0),
-            unique: true,
+            unique: true
+        }, 
+        rg: {
+            type: DataType.STRING(20),
             allowNull: false,
             validate: {
                 notEmpty: true,
             },
-        }, 
-        rg: {
-            type: DataType.STRING(20),
-            defaultValue: ''
         },
         documment: {
             type: DataType.STRING(20),
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
         },
         adress: {
             type: DataType.STRING(20),
-            defaultValue: ''
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
         },
         number: {
             type: DataType.STRING(20),
             allowNull: false,
-            defaultValue: ''
+            validate: {
+                notEmpty: true,
+            },
         },
         neighborhood: {
             type: DataType.STRING(20),
-            defaultValue: ''
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
         },
         cep:{
             type: DataType.STRING(20),
-            defaultValue: ''
-        },
-        phone1:{
-            type: DataType.STRING(20),
-            defaultValue: ''
-        },
-        phone2:{
-            type: DataType.STRING(20),
-            defaultValue: ''
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
         },
         id_cities: { 
             type: DataType.INTEGER(4),
             allowNull: false,
             validate: {
                 notEmpty: true,
-            }
+            },
+            references: {
+                model: 'cities',
+                key: 'id_cities',
+            },
         },
     },
-    {
-        tableName: 'people',
-        createdAt: false,
-        updatedAt: false
-    })
-    sequelize.models.cities.hasOne(People, {foreignKey : 'id_cities', targetKey:'id_cities' })
+        {
+            tableName: 'people',
+            createdAt: false,
+            updatedAt: false
+        });
+
     return People;
 
 }

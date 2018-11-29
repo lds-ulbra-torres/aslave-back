@@ -16,8 +16,6 @@ import {
     UsersController,
     ProductsController,
     GroupProductsController,
-    InputStocksController,
-    OutputStocksController,
     PeopleControllers,
     CitiesController,
     StatesController
@@ -28,7 +26,7 @@ router.get("/", (req,res) => res.send("Hello world") )
 // Route authentication
 router.post('/auth', UsersController.validate)
 // Middlewares authentication routes
- router.use(auth.authenticate())
+router.use(auth.authenticate())
 // Route users
 
 //User
@@ -52,20 +50,6 @@ router.get('/category/:id', GroupProductsController.get)
 router.post('/category', GroupProductsController.store)
 router.put('/category/:id', GroupProductsController.update)
 router.delete('/category/:id', GroupProductsController.delete)
-
-// Routes Input Stock
-router.get('/stock-input', InputStocksController.index)
-router.get('/stock-input/:id', InputStocksController.get)
-router.post('/stock-input', InputStocksController.store)
-router.put('/stock-input/:id', InputStocksController.update)
-router.delete('/stock-input/:id', InputStocksController.delete)
-
-// Routes Output Stock
-router.get('/stock-output', OutputStocksController.index)
-router.get('/stock-output/:id', OutputStocksController.get)
-router.post('/stock-output', OutputStocksController.store)
-router.put('/stock-output/:id', OutputStocksController.update)
-router.delete('/stock-output/:id', OutputStocksController.delete)
 
 //People
 router.get('/people', PeopleControllers.index)
