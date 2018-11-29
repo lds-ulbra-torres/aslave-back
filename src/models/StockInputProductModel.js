@@ -36,7 +36,6 @@ export default (sequelize, DataType) => {
       updatedAt: false
   })
   sequelize.models.stock_input.hasMany(StockInput, {foreignKey : 'id_stock', targetKey:'id_stock' })
-  
-  //StockInput.hasOne(sequelize.models.stock_input, {foreignKey : 'id_stock', targetKey:'id_stock' })
+  StockInput.hasOne(sequelize.models.stock_input, {foreignKey : 'id_stock', targetKey:'id_stock' })
   return StockInput
 }
