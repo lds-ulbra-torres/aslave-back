@@ -28,7 +28,10 @@ export default (sequelize, DataType) => {
       },
       password: {
         type: DataType.STRING(50),
-        defaultValue:null
+        defaultValue:null,
+        set(val) {
+          this.setDataValue('password', md5(val));
+        }
       },
     },{
         tableName: 'user',
