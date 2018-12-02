@@ -18,7 +18,9 @@ import {
     GroupProductsController,
     PeopleControllers,
     CitiesController,
-    StatesController
+    StatesController,
+    FinClassificationsController,
+    FinanacialReleasesController
 } from './controllers'
 
 // EndPoints
@@ -63,4 +65,12 @@ router.post('/cities', CitiesController.store)
 router.get('/states', StatesController.index)
 router.post('/states', StatesController.store)
 
+
+//Financial Classificarions
+routes.get('/finclassifications', FinClassificationsController.index);
+routes.post('/finclassifications', FinClassificationsController.store);
+
+//Financial Releases
+routes.get('/finreleases', FinanacialReleasesController.index);
+routes.post('/finreleases', FinanacialReleasesController.store)
 module.exports = router
