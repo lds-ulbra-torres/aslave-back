@@ -35,6 +35,7 @@ const routers = ( name, controller )=> {
 }
 
 // EndPoints
+
 router.get("/", (req,res) => res.send("Hello world") )
 // Route authentication
 router.post('/auth', UsersController.validate)

@@ -7,24 +7,24 @@ const FinancialClassificationsModel = db().models.fin_classifications
 export const FinancialClasificarionsController  = {
     index(req, res) {
         FinancialClassificationsModel.findAll()
-        .then(result => response( res, erro))
+        .then(result => response(res, result))
         .catch( erro => error(res, erro) )
     },
 
     get (req,res){
         FinancialClassificationsModel.findAll({
             where:{
-                id_classification: req.parms.id
+                id_classification: req.params.id
             }
         })
         .then( result => response(res,result) )
-        .catch(erro => error (res,err) )
+        .catch(erro => error (res, erro) )
     },
 
     store(req,res){
         FinancialClassificationsModel.create(req.body)
-        .then( result => response(res,result) )
-        .catch(erro => error (res,erro) )
+        .then( result => response(res, result) )
+        .catch(erro => error (res, erro) )
 
     },
 
@@ -33,11 +33,11 @@ export const FinancialClasificarionsController  = {
             error(res, {}, 'id_classification')}
         else{
             FinancialClassificationsModel.update
-            (req, body, { where:{
+            (req.body, { where:{
                 id_classification:req.params.id
             }})
             .then( result => response (res, result) )
-            .catch(erro =>error (res,erro) )
+            .catch(erro =>error (res, erro) )
         }   
     
     },

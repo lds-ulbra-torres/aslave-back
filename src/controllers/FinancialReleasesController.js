@@ -6,21 +6,19 @@ const FinancialReleasesModel = db().models.financial_releases
 export const FinancialReleasesController = {
     index(req, res) {
         FinancialReleasesModel.findAll()
-        .then( resul => response(res.result) )
-        .catch( erro => error (res,erro) )  
+        .then( result => response(res, result) )
+        .catch( erro => error (res, erro) )  
     },
 
     get (req,res){
-        FinancialReleasesModel.findAll({ where: { id_financial_release : req.parms.id}})
-        .then(result => response (res,result) )
-        .catch( erro => error (res,err) )
-
+        FinancialReleasesModel.findAll({ where: { id_financial_release : req.params.id}})
+        .then(result => response (res, result) )
+        .catch( erro => error (res, erro) )
     },
 
     store(req, res) {
         FinancialReleasesModel.create(req.body)
-        .then( result => respose(res,
-        result) )
+        .then( result => respose(res, result) )
         .catch(erro => error (res, erro) )
     },
 
@@ -38,9 +36,8 @@ export const FinancialReleasesController = {
     delete(req, res) {
         FinanacialReleasesController.destroy({
             where: { id_financial_release : req.params.id}}
-            .then( result => response 
-            (res, result) )
-            .cath( erro => error(res,erro) )
+            .then( result => response(res, result) )
+            .cath( erro => error(res, erro) )
         )
     }
 
