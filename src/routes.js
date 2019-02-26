@@ -18,65 +18,59 @@ import {
     GroupProductsController,
     InputStocksController,
     OutputStocksController,
+    FinancialClasificarionsController,
+    FinancialReleasesController,
     PeopleControllers,
     CitiesController,
     StatesController
 } from './controllers'
 
+// Endpoint functions common to all
+const routers = ( name, controller )=> { 
+    controller.index ? router.get(`/${name}`, controller.index) : null
+    controller.get ? router.get(`/${name}/:id`, controller.get) : null
+    controller.store ? router.post(`/${name}`, controller.store) : null
+    controller.update ? router.put(`/${name}/:id`, controller.update) : null
+    controller.delete ? router.delete(`/${name}/:id`, controller.delete) : null
+}
+
 // EndPoints
 router.get("/", (req,res) => res.send("Hello world") )
 // Route authentication
 router.post('/auth', UsersController.validate)
-// Middlewares authentication routes
- router.use(auth.authenticate())
-// Route users
 
-//User
-router.get('/user', UsersController.index)
-router.get('/user/:id', UsersController.get)
-router.post('/user', UsersController.store)
-router.put('/user/:id', UsersController.update)
-router.delete('/user/:id', UsersController.delete)
+// Middlewares authentication routes
+router.use(auth.authenticate())
+
+// Route users
+routers('user', UsersController)
 
 // Routes products
-router.get('/product', ProductsController.index)
-router.get('/product/:id', ProductsController.get)
-router.post('/product', ProductsController.store)
-router.put('/product/:id', ProductsController.update)
-router.delete('/product/:id', ProductsController.delete)
+routers('product', ProductsController)
 router.get('/product-category/:id', ProductsController.getByCategory)
 
 // Routes Group or categorys
-router.get('/category', GroupProductsController.index)
-router.get('/category/:id', GroupProductsController.get)
-router.post('/category', GroupProductsController.store)
-router.put('/category/:id', GroupProductsController.update)
-router.delete('/category/:id', GroupProductsController.delete)
+routers('category', GroupProductsController)
 
 // Routes Input Stock
-router.get('/stock-input', InputStocksController.index)
-router.get('/stock-input/:id', InputStocksController.get)
-router.post('/stock-input', InputStocksController.store)
-router.put('/stock-input/:id', InputStocksController.update)
-router.delete('/stock-input/:id', InputStocksController.delete)
+routers('stock-input', InputStocksController)
 
 // Routes Output Stock
-router.get('/stock-output', OutputStocksController.index)
-router.get('/stock-output/:id', OutputStocksController.get)
-router.post('/stock-output', OutputStocksController.store)
-router.put('/stock-output/:id', OutputStocksController.update)
-router.delete('/stock-output/:id', OutputStocksController.delete)
+routers('stock-output', OutputStocksController)
+
+// Routes Financial Realeases
+routers('financial-releses', FinancialReleasesController)
+
+// Routes Financial Classifications
+routers('financial-classifications', FinancialClasificarionsController)
 
 //People
-router.get('/people', PeopleControllers.index)
-router.post('/people', PeopleControllers.store)
+routers('people', PeopleControllers)
 
 //Cities
-router.get('/cities', CitiesController.index)
-router.post('/cities', CitiesController.store)
+routers('cities', CitiesController)
 
 //States
-router.get('/states', StatesController.index)
-router.post('/states', StatesController.store)
+routers('states', StatesController)
 
 module.exports = router
