@@ -65,7 +65,7 @@ export default (sequelize , DataType) =>{
 
 
         due_date_pay: {
-            type: DataType.DATE(),
+           type: DataType.DATE(),
            allowNUll: false,
            validate: {
                notEmpty: true,
@@ -81,6 +81,15 @@ export default (sequelize , DataType) =>{
         },
 
     })
+
+    FinancialReleases.search = query => {
+        return FinancialReleases.findAll({ 
+            include : [{
+              model: sequelize.models.fin_classifications
+            }],
+            where : { }
+          })
+    }
 
     return FinancialReleases
 }
