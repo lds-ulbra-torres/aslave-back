@@ -70,6 +70,11 @@ export default (sequelize, DataType) => {
         updatedAt: false
     })
     sequelize.models.cities.hasOne(People, {foreignKey : 'id_cities', targetKey:'id_cities' })
+    People.getById = id_people => {
+        return People.findAll({ 
+          where : { id_people }
+        })
+      }
     return People;
 
 }

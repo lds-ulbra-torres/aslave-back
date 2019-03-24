@@ -41,7 +41,7 @@ router.get("/", (req,res) => res.send("Hello world") )
 router.post('/auth', UsersController.validate)
 
 // Middlewares authentication routes
-router.use(auth.authenticate())
+//router.use(auth.authenticate())
 
 // Route users
 routers('user', UsersController)
