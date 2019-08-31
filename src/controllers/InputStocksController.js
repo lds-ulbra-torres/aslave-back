@@ -11,33 +11,33 @@ export const InputStocksController  = {
             attributes: ['name']
         }] })
         .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
+        .catch( err => error(res, err) )
     },
 
     get (req, res) {
         StockInputModel.getOne(req.params.id)
         .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
+        .catch( err => error(res, err) )
     },
 
     store (req, res) {  
         StockInputModel.creator(req.body)
-        .then( respo => response(res, respo) )
-        .catch( erro => error(res, erro) )
+        .then( result => response(res, result) )
+        .catch( err => error(res, err) )
     },
 
     update (req, res) {
         if(req.body.amount || req.body.id_group || req.body.id_product )
-            error(res, {}, "conteins amount or id_group or id_product ")
+            error(res, {}, "contains amount or id_group or id_product ")
         else
-            StockInputModel.updator(req.body, req.params.id)
-            .then( respo => response(res, respo) )
-            .catch( erro => error(res, erro) )
+            StockInputModel.updater(req.body, req.params.id)
+            .then( result => response(res, result) )
+            .catch( err => error(res, err) )
     },
 
     delete (req, res) {
         StockInputModel.destroy({ where : { id_stock : req.params.id} })
         .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
+        .catch( err => error(res, err) )
     },
 }
