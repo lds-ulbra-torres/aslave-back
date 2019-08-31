@@ -11,7 +11,7 @@ const auth = Auth()
 router.use(auth.initialize())
 // Form-Data
 router.use(multer().any())
-// Cotrollers
+// Controllers
 import {  
     UsersController,
     ProductsController,
@@ -20,9 +20,7 @@ import {
     OutputStocksController,
     FinancialClasificarionsController,
     FinancialReleasesController,
-    PeopleControllers,
-    CitiesController,
-    StatesController
+    PeopleControllers
 } from './controllers'
 
 // Endpoint functions common to all
@@ -41,7 +39,7 @@ router.get("/", (req,res) => res.send("Hello world") )
 router.post('/auth', UsersController.validate)
 
 // Middlewares authentication routes
-//router.use(auth.authenticate())
+router.use(auth.authenticate())
 
 // Route users
 routers('user', UsersController)
@@ -68,10 +66,5 @@ routers('financial-classifications', FinancialClasificarionsController)
 //People
 routers('people', PeopleControllers)
 
-//Cities
-routers('cities', CitiesController)
-
-//States
-routers('states', StatesController)
 
 module.exports = router
