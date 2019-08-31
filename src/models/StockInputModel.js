@@ -44,53 +44,94 @@ export default (sequelize, DataType) => {
   StockInput.belongsTo(sequelize.models.people, {foreignKey : 'id_people', targetKey:'id_people' })
 
   StockInput.getOne = id_stock => {
-    return StockInput.findAll({ where: { id_stock }, include: [{
-      model: sequelize.models.stock_input_products,
-    }] })
+    return StockInput.findAll({ where : {id_stock}, include: [{
+        model: sequelize.models.stock_input_products,
+        include: [{
+          model: sequelize.models.stock_products
+        }]
+      }]
+    });
+   
   }
-  StockInput.creator = data => {
-    return StockInput.create(data)
-    .then( async result => {
-        let res = []
-        await data.stock_input_products.map( obj => {
-            obj.id_stock = result.id_stock
-            sequelize.models.stock_input_products.create(obj)
-            .then(response => res.push(response))
-            .catch(error => res.push(error))
-        })            
-        return res
+
+  // Utils
+  const equals = (productA, productB) => {
+    if ( productA.id_stock === productB.id_stock && productA.id_product === productB.id_product)
+      if (productA.unit_price_input === productB.unit_price_input && productA.amount_input === productB.amount_input)
+        return true
+
+    return false
+  }
+
+  const containsAButNotB = (a = [], b = []) => a.filter( itemA => {
+    if (!b.find( itemB => equals(itemB, itemA)))
+      return itemA  
+  })
+
+  const sumValue = (products) => {
+    let total = 0
+0
+    products.map( product => {
+       total += product.amount_input * product.unit_price_input
     })
+
+    return total
   }
-  StockInput.updator = ( data, id_stock ) => {
-    return StockInput.update(data, { where : { id_stock } })
-    .then( () => {
-        return sequelize.models.stock_input_products.findAll({ where : { id_stock } })
-        .then( async obj => {
-            let res = []
-            let stock_input_products = JSON.stringify(data.stock_input_products)
 
-            await data.stock_input_products.map( (item, index) => {
 
-                if ( stock_input_products.indexOf(JSON.stringify(obj[index])) === -1 && obj[index] != null)
-                    sequelize.models.stock_input_products.destroy({ 
-                        where : { id_stock , id_product : obj[index].id_product }
-                    })
+  // METHODS 
+  StockInput.creator = async data => {
+    try {
+      const inputCreate = StockInput.create(data)
+      await data.stock_input_products.map( async inputProducts => {
+        try {
+          inputProducts.id_stock = inputCreate.id_stock
+          await sequelize.models.stock_input_products.create(inputProducts)
+        } catch(error) {
+          console.log(error)
+        }
+      })
 
-            })
+      return true
 
-            obj = JSON.stringify(obj)
-            
-            await data.stock_input_products.map( async item => {
-
-                if (  obj.indexOf(JSON.stringify(item)) === -1)
-                  await sequelize.models.stock_input_products.create(item)
-                  .then(response => res.push(response))
-                  .catch( error => res.push(error))
-            })
-
-            return res
-        })
-    })
+    } catch(error) {
+      console.log(error)
+      return error 
+    }
   }
+
+  StockInput.updater = async ( data, id_stock ) => {
+    try {
+      const productUpdate = {
+        input_date: data.input_date,
+        input_type: data.input_type,
+        sum_value: sumValue(data.stock_input_products),
+        id_people: data.id_people,
+      }
+
+      await StockInput.update(productUpdate, { where : { id_stock } })
+      
+      // SELECT ALL TABLE WITH PRODUCTS FROM STOCK_INPUT
+      const inputProducts = await sequelize.models.stock_input_products.findAll({ where : { id_stock } })
+      
+      // PARSE
+      let productDB = JSON.parse(JSON.stringify(inputProducts))
+      let productReq = data.stock_input_products
+
+      // FIND THE DIFFERENCE BETWEEN LIST
+      let deleteProducts = containsAButNotB(productDB, productReq)
+      let addProducts = containsAButNotB(productReq, productDB)
+
+      // UPGRADES STOCKED PRODUCTS
+      await sequelize.models.stock_input_products.deleteProducts(deleteProducts, id_stock)
+      await sequelize.models.stock_input_products.addProducts(addProducts, id_stock)
+
+      return true
+    } catch (error) {
+      console.log(error)
+      return error
+    }
+  }
+
   return StockInput
 }
