@@ -6,7 +6,7 @@ const  StockOutputModel = db().models.stock_output_products
 export const OutputStocksController  = {
     
     index (req, res) {
-        StockOutputModel.findAll({attributes: ['id_stock','createdAt', 'unit_price_output'], include: [{
+        StockOutputModel.findAll({attributes: ['id_stock','createdAt', 'unit_price_output', 'amount_output', 'unit_measurement'], include: [{
             model: db().models.user,
             attributes: ['full_name']
         }] })
