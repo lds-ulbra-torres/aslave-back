@@ -17,11 +17,13 @@ export default (sequelize, DataType) => {
             },
         },
         cpf_cnpj:{
-            type: DataType.DECIMAL(11, 0),
+            type: DataType.DECIMAL(14, 0),
             unique: true,
             allowNull: false,
             validate: {
                 notEmpty: true,
+                max: 14,
+                min: 11,
             },
         }, 
         rg: {
@@ -56,20 +58,28 @@ export default (sequelize, DataType) => {
             type: DataType.STRING(20),
             defaultValue: ''
         },
-        id_cities: { 
-            type: DataType.INTEGER(4),
+        city: { 
+            type: DataType.STRING(100),
             allowNull: false,
             validate: {
                 notEmpty: true,
             }
         },
+        state : {
+            type: DataType.STRING(100),
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            }
+        }
     },
     {
         tableName: 'people',
         createdAt: false,
         updatedAt: false
     })
-    sequelize.models.cities.hasOne(People, {foreignKey : 'id_cities', targetKey:'id_cities' })
+    
+    sequelize.models.financial_releases.belongsTo(People, {foreignKey : 'id_people', targetKey:'id_people' })    
     People.getById = id_people => {
         return People.findAll({ 
           where : { id_people }
