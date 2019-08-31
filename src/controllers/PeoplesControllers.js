@@ -25,7 +25,7 @@ export const PeopleControllers = {
     },
 
     update (req, res) {
-        if( req.body.id_people )
+        if( req.params.id_people )
             error(res, {}, "conteins id_people ")
         else
             PeopleModel.update(req.body, { where : { id_people : req.params.id} })
