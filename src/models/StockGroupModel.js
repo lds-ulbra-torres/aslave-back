@@ -12,6 +12,7 @@ export default (sequelize, DataType) => {
       name_group: {
         type: DataType.STRING(250),
         allowNull: false,
+        unique: true,
         validate: {
           notEmpty: true,
         },
