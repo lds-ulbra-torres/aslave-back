@@ -41,5 +41,11 @@ export const FinancialClasificarionsController  = {
         }   
     
     },
+
+    delete(req, res) {
+        FinancialClassificationsModel.destroy({ where: { id_classification : req.params.id}})
+        .then( (result) => response(res, result) )
+        .catch( erro => error(res, erro) )
+    }
     
 }

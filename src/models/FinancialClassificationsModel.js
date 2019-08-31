@@ -14,6 +14,7 @@ export default (sequelize, DataType)=> {
         name_classification:{
             type: DataType.STRING(50),
             allowNull: false,
+            unique: true,
             validate:{
                 notEmpty: true,
             },
