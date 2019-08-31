@@ -6,7 +6,6 @@ module.exports = {
     host: process.env.DB_HOST,
     port: 41890,
     dialect: 'mysql',
-    operatorsAliases: false
   },
   jwtSecret: process.env.JWT_SECRET,
   jwtSession: {session: false},
