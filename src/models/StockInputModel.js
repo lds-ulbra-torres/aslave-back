@@ -40,9 +40,9 @@ export default (sequelize, DataType) => {
       createdAt: false,
       updatedAt: false
   })
+//  StockInput.hasOne(sequelize.models.stock_input_products, {foreignKey : 'id_stock', targetKey:'id_stock' })
   sequelize.models.people.hasMany(StockInput, {foreignKey : 'id_people', targetKey:'id_people' })
   StockInput.belongsTo(sequelize.models.people, {foreignKey : 'id_people', targetKey:'id_people' })
-
   StockInput.getOne = id_stock => {
     return StockInput.findAll({ where : {id_stock}, include: [{
         model: sequelize.models.stock_input_products,

@@ -66,7 +66,6 @@ export default (sequelize , DataType) =>{
                notEmpty: true,
            },
         },
-
         historic: {
             type: DataType.STRING(400),
             allowNull: false,

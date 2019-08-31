@@ -42,8 +42,13 @@ export const UsersController  = {
 
     validate (req, res) { 
         UserModel.validate(req.body.login, req.body.password)
-        .then(result => response(res, {token: jwt.encode( { id: result.id_user } , jwtSecret) } ) )
-        .catch( erro => error(res, erro)  )
+        .then(result => {
+            if(result)
+                response(res, {token: jwt.encode( { id: result.id_user } , jwtSecret) } ) 
+            else
+                error(res, {}, 'usuário ou senha incorreta')
+        })
+        .catch( erro => error(res, {}, 'usuário ou senha incorreta')  )
     }
 }
 

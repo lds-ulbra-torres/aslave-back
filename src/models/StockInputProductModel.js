@@ -55,6 +55,6 @@ export default (sequelize, DataType) => {
       console.log(error)
     }
   })
-  //StockInput.hasOne(sequelize.models.stock_input, {foreignKey : 'id_stock', targetKey:'id_stock' })
+  
   return StockInput
 }
