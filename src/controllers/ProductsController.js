@@ -31,8 +31,8 @@ export const ProductsController  = {
     },
 
     update (req, res) {
-        if(req.body.amount || req.body.id_group || req.body.id_product )
-            error(res, {}, "conteins amount or id_group or id_product ")
+        if(req.body.amount || req.body.id_product )
+            error(res, {}, "conteins amount or id_product ")
         else
             ProductsModel.update(req.body, { where : { id_product : req.params.id} })
             .then( result => response(res, result) )
