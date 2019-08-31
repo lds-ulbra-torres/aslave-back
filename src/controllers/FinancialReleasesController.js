@@ -5,20 +5,32 @@ const FinancialReleasesModel = db().models.financial_releases
 
 export const FinancialReleasesController = {
     index(req, res) {
-        FinancialReleasesModel.findAll()
+        FinancialReleasesModel.findAll({ include: [{
+            model: db().models.people,
+            attributes: ['name']
+        },{
+            model: db().models.fin_classifications,
+            attributes: ['name_classification']
+        }] })
         .then( result => response(res, result) )
         .catch( erro => error (res, erro) )  
     },
 
     get (req,res){
-        FinancialReleasesModel.findAll({ where: { id_financial_release : req.params.id}})
+        FinancialReleasesModel.findAll({ where: { id_financial_release : req.params.id }, include: [{
+            model: db().models.people,
+            attributes: ['name']
+        },{
+            model: db().models.fin_classifications,
+            attributes: ['name_classification']
+        }] })
         .then(result => response (res, result) )
         .catch( erro => error (res, erro) )
     },
 
     store(req, res) {
         FinancialReleasesModel.create(req.body)
-        .then( result => respose(res, result) )
+        .then( result => response(res, result) )
         .catch(erro => error (res, erro) )
     },
 
@@ -27,18 +39,16 @@ export const FinancialReleasesController = {
         if(req.body.id_financial_release)
             error(res, {}, 'conteins id_financial_release')
         else 
-            FinancialReleasesModel.update
-                (req, body, { where: { id_financial_release : req.params.id} })
+            FinancialReleasesModel.update(req.body, { where: { id_financial_release : req.params.id} })
                 .then( result => response(res, result) )
                 .catch( erro => error(res,erro) )
     },
 
     delete(req, res) {
-        FinanacialReleasesController.destroy({
-            where: { id_financial_release : req.params.id}}
+        FinancialReleasesModel.destroy({
+            where: { id_financial_release : req.params.id}})
             .then( result => response(res, result) )
-            .cath( erro => error(res, erro) )
-        )
+            .catch( erro => error(res, erro) )
     }
 
 }
