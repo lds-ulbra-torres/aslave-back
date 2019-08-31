@@ -16,11 +16,6 @@ export default (sequelize , DataType) =>{
             validate: {
                 notEmpty: true,
             },
-            reference: {
-                model: 'people',
-                key: 'id_people'
-            },
-
         },
 
         id_classification:{
@@ -81,7 +76,8 @@ export default (sequelize , DataType) =>{
         },
 
     })
-
+    sequelize.models.fin_classifications.hasMany(FinancialReleases, {foreignKey : 'id_classification', targetKey:'id_classification' })
+    FinancialReleases.belongsTo(sequelize.models.fin_classifications, {foreignKey : 'id_classification', targetKey:'id_classification' })
     FinancialReleases.search = query => {
         return FinancialReleases.findAll({ 
             include : [{
