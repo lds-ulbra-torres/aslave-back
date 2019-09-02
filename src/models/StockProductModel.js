@@ -42,12 +42,14 @@ export default (sequelize, DataType) => {
       createdAt: false,
       updatedAt: false
   })
+
   StockProduct.hasOne(sequelize.models.stock_input_products, {foreignKey : 'id_product', targetKey:'id_product' })
   StockProduct.hasOne(sequelize.models.stock_output_products, {foreignKey : 'id_product', targetKey:'id_product' })
   sequelize.models.stock_output_products.hasMany(StockProduct, {foreignKey : 'id_product', targetKey:'id_product' })
   sequelize.models.stock_input_products.hasMany(StockProduct, {foreignKey : 'id_product', targetKey:'id_product' })  
   StockProduct.belongsTo(sequelize.models.stock_product_groups, {foreignKey : 'id_group', targetKey:'id_group' })
   StockProduct.belongsTo(sequelize.models.stock_input_products, {foreignKey : 'id_product', targetKey:'id_product' })  
+
   StockProduct.getAll = () => {
     return StockProduct.findAll({ 
       include : [{
@@ -65,5 +67,6 @@ export default (sequelize, DataType) => {
       }] 
     })
   }
+
   return StockProduct
 }

@@ -54,7 +54,6 @@ export default (sequelize, DataType) => {
     }
   },{
       tableName: 'stock_output_products',
-      updatedAt: false
   })
   return StockOutput
 }
