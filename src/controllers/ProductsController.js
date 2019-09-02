@@ -2,6 +2,7 @@ import db from '../config/db'
 import { response, error } from './API'
 
 const  ProductsModel = db().models.stock_products
+const  InputProductsModel = db().models.stock_input_products
 
 export const ProductsController  = {
     
@@ -40,8 +41,16 @@ export const ProductsController  = {
     },
 
     delete (req, res) {
-        ProductsModel.destroy({ where : { id_product : req.params.id} })
-        .then( result => response(res, result) )
+        InputProductsModel.count({ where : { id_product : req.params.id} })
+        .then( count => {
+            if(count === 0)
+                ProductsModel.destroy({ where : { id_product : req.params.id} })
+                .then( result => response(res, result) )
+                .catch( erro => error(res, erro) )
+            else
+                error(res, {}, "Product is being used")
+        })
         .catch( erro => error(res, erro) )
+
     },
 }
