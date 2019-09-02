@@ -17,13 +17,12 @@ export default (sequelize, DataType) => {
             },
         },
         cpf_cnpj:{
-            type: DataType.DECIMAL(14, 0),
+            type: DataType.STRING(14),
             unique: true,
             allowNull: false,
             validate: {
                 notEmpty: true,
-                max: 14,
-                min: 11,
+                len: [11, 14],
             },
         }, 
         rg: {

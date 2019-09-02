@@ -19,7 +19,7 @@ module.exports = () => {
     }
     db.models = autoLoadModel(sequelize)
     // Apenas para desenvolvimento
-    sequelize.sync().done(() => db)
+    // sequelize.sync().done(() => db)
   }
   
   return db
