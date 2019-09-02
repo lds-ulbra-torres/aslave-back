@@ -70,7 +70,7 @@ export default (sequelize, DataType) => {
 
   const sumValue = (products) => {
     let total = 0
-0
+
     products.map( product => {
        total += product.amount_input * product.unit_price_input
     })
@@ -82,15 +82,8 @@ export default (sequelize, DataType) => {
   // METHODS 
   StockInput.creator = async data => {
     try {
-      const inputCreate = StockInput.create(data)
-      await data.stock_input_products.map( async inputProducts => {
-        try {
-          inputProducts.id_stock = inputCreate.id_stock
-          await sequelize.models.stock_input_products.create(inputProducts)
-        } catch(error) {
-          console.log(error)
-        }
-      })
+      const inputCreate = await StockInput.create(data)
+      await sequelize.models.stock_input_products.addProducts(data.stock_input_products, inputCreate.id_stock)
 
       return true
 
@@ -128,6 +121,35 @@ export default (sequelize, DataType) => {
 
       return true
     } catch (error) {
+      console.log(error)
+      return error
+    }
+  }
+
+  StockInput.delete = async id_stock => {
+    try {
+      // SELECT ALL INPUT PRODUCTS
+      let inputProducts = await sequelize.models.stock_input_products.findAll({ where : { id_stock } })
+        
+      inputProducts = JSON.parse(JSON.stringify(inputProducts))
+        
+      inputProducts.map( async inputProduct => {
+        // SELECT INPUT_STOCK'S PRODUCTS
+        let stockProduct = await sequelize.models.stock_products.findOne({ where : { id_product : inputProduct.id_product } })
+        
+        stockProduct = JSON.parse(JSON.stringify(stockProduct))
+        
+        const productUpdate = {
+          amount :  stockProduct.amount - inputProduct.amount_input
+        }
+  
+        sequelize.models.stock_products.update( productUpdate, { where : { id_product: stockProduct.id_product }})
+      })
+      
+      const stockInputDelete = await StockInput.destroy({ where : { id_stock } })
+
+      return stockInputDelete
+    } catch(error) {
       console.log(error)
       return error
     }

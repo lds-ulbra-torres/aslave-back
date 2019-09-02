@@ -36,7 +36,7 @@ export const InputStocksController  = {
     },
 
     delete (req, res) {
-        StockInputModel.destroy({ where : { id_stock : req.params.id} })
+        StockInputModel.delete(req.params.id)
         .then( result => response(res, result) )
         .catch( err => error(res, err) )
     },
