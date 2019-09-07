@@ -51,9 +51,7 @@ export default (sequelize, DataType) => {
       validate: {
         notEmpty: true,
       },
-    }
-  },{
-      tableName: 'stock_output_products',
+    },
   })
   return StockOutput
 }

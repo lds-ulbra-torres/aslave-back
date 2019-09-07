@@ -5,7 +5,7 @@ export default (sequelize , DataType) =>{
             primaryKey: true,
             autoIncrement: true,
             allowNull: false,
-            calidate: {
+            validate: {
                 notEmpty: true,
             },
         },
