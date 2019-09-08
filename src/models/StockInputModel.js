@@ -121,22 +121,17 @@ export default (sequelize, DataType) => {
         sum_value: sumValue(data.stock_input_products),
         id_people: data.id_people,
       }
-
       await StockInput.update(productUpdate, { where: { id_stock } })
-
       // SELECT ALL TABLE WITH PRODUCTS FROM STOCK_INPUT
       const inputProducts = await sequelize.models.stock_input_products.findAll(
         { where: { id_stock } }
       )
-
       // PARSE
       let productDB = JSON.parse(JSON.stringify(inputProducts))
       let productReq = data.stock_input_products
-
       // FIND THE DIFFERENCE BETWEEN LIST
       let deleteProducts = containsAButNotB(productDB, productReq)
       let addProducts = containsAButNotB(productReq, productDB)
-
       // UPGRADES STOCKED PRODUCTS
       await sequelize.models.stock_input_products.deleteProducts(
         deleteProducts,
@@ -146,10 +141,8 @@ export default (sequelize, DataType) => {
         addProducts,
         id_stock
       )
-
       return true
     } catch (error) {
-      console.log(error)
       return error
     }
   }

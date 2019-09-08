@@ -6,10 +6,10 @@ export default class Controller {
     this.id = ID
   }
 
-  async actionModel (action, res, params) {
+  async actionModel(action, res, params) {
     this.model[action](params)
-    .then( result => response(res, result))
-    .catch(err => error(res, err))
+      .then(result => response(res, result))
+      .catch(err => error(res, err))
   }
 
   index(req, res) {
@@ -25,9 +25,14 @@ export default class Controller {
   }
 
   update(req, res) {
-    if (req.body[this.id]) error(res, {}, `contains ${[this.id]}`)
+    if (req.body[this.id]) 
+      error(res, {}, `contains ${[this.id]}`)
     else
-      this.actionModel('update', res, (req.body, { where: { [this.id]: req.params.id } }))
+      this.actionModel(
+        'update',
+        res,
+        (req.body, { where: { [this.id]: req.params.id } })
+      )
   }
 
   delete(req, res) {
