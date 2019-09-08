@@ -1,34 +1,31 @@
 export default (sequelize, DataType) => {
-    const FinancialClassifications = sequelize.define('fin_classifications', {
-        id_classification: {
-            type: DataType.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-            allowIncrement: true,
-            allowNull: false,
-            validate: {
-                notEmpty: true,
-            },
-        },
-        
-        name_classification:{
-            type: DataType.STRING(50),
-            allowNull: false,
-            unique: true,
-            validate:{
-                notEmpty: true,
-            },
-        },
+  const FinancialClassifications = sequelize.define('fin_classifications', {
+    id_classification: {
+      type: DataType.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      validate: {
+        notEmpty: true,
+      },
+    },
 
-        classifation_type:{
-            type: DataType.STRING(1),
-            allowNull: false,
-            validate:{
-                notEmpty: true,
-            },
-        },
-        
-    })
+    name_classification: {
+      type: DataType.STRING(50),
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+      },
+    },
 
-    return FinancialClassifications
+    classifation_type: {
+      type: DataType.STRING(1),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+  })
+
+  return FinancialClassifications
 }

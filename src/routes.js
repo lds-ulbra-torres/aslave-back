@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import multer from 'multer'
 import cors from 'cors'
-import Auth from  './helpers/auth';
+import Auth from './helpers/auth'
 // Initialize Router
 const router = Router()
-// Cross-Origin Resource Sharing  ( CORS ) 
+// Cross-Origin Resource Sharing  ( CORS )
 router.use(cors())
 // Auth
 const auth = Auth()
@@ -13,28 +13,38 @@ router.use(auth.initialize())
 router.use(multer().any())
 // Controllers
 import {
-    UsersController,
-    ProductsController,
-    GroupProductsController,
-    InputStocksController,
-    OutputStocksController,
-    FinancialClassificationsController,
-    FinancialReleasesController,
-    PeopleControllers
+  UsersController,
+  ProductsController,
+  GroupProductsController,
+  InputStocksController,
+  OutputStocksController,
+  FinancialClassificationsController,
+  FinancialReleasesController,
+  PeopleControllers,
 } from './controllers'
 
 // Endpoint functions common to all
-const routers = ( name, controller )=> { 
-    controller.index ? router.get(`/${name}`, (req, res) => controller.index(req, res)) : null
-    controller.get ? router.get(`/${name}/:id`, (req, res) => controller.get(req, res)) : null
-    controller.store ? router.post(`/${name}`, (req, res) => controller.store(req, res)) : null
-    controller.update ? router.put(`/${name}/:id`, (req, res) => controller.update(req, res)) : null
-    controller.delete ? router.delete(`/${name}/:id`, (req, res) => controller.delete(req, res)) : null
+const routers = (name, controller) => {
+  controller.index
+    ? router.get(`/${name}`, (req, res) => controller.index(req, res))
+    : null
+  controller.get
+    ? router.get(`/${name}/:id`, (req, res) => controller.get(req, res))
+    : null
+  controller.store
+    ? router.post(`/${name}`, (req, res) => controller.store(req, res))
+    : null
+  controller.update
+    ? router.put(`/${name}/:id`, (req, res) => controller.update(req, res))
+    : null
+  controller.delete
+    ? router.delete(`/${name}/:id`, (req, res) => controller.delete(req, res))
+    : null
 }
 
 // EndPoints
 
-router.get("/", (req,res) => res.send("Hello world") )
+router.get('/', (req, res) => res.send('Hello world'))
 // Route authentication
 router.post('/auth', new UsersController().validate)
 
@@ -46,7 +56,7 @@ routers('user', new UsersController())
 
 // Routes products
 routers('product', new ProductsController())
-router.get('/product-category/:id',new ProductsController().getByCategory)
+router.get('/product-category/:id', new ProductsController().getByCategory)
 
 // Routes Group or categories
 routers('category', new GroupProductsController())
@@ -65,6 +75,5 @@ routers('financial-classifications', new FinancialClassificationsController())
 
 //People
 routers('people', new PeopleControllers())
-
 
 module.exports = router

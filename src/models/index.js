@@ -8,25 +8,30 @@ const config = require(__dirname + '/../config/config')
 
 const db = {}
 
-let sequelize = new Sequelize(config.database, config.username, config.password, config)
+let sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+)
 
-fs
-  .readdirSync(__dirname)
-  .filter(file =>
-    (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
+fs.readdirSync(__dirname)
+  .filter(
+    file =>
+      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
   )
   .forEach(file => {
-    const model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
-  });
+    const model = sequelize['import'](path.join(__dirname, file))
+    db[model.name] = model
+  })
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
-    db[modelName].associate(db);
+    db[modelName].associate(db)
   }
-});
+})
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+db.sequelize = sequelize
+db.Sequelize = Sequelize
 
-module.exports = db;
+module.exports = db

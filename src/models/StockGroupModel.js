@@ -1,10 +1,11 @@
 export default (sequelize, DataType) => {
-    const StockProductGroup = sequelize.define('stock_product_groups', {
+  const StockProductGroup = sequelize.define(
+    'stock_product_groups',
+    {
       id_group: {
         type: DataType.INTEGER(20),
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
         validate: {
           notEmpty: true,
         },
@@ -17,11 +18,12 @@ export default (sequelize, DataType) => {
           notEmpty: true,
         },
       },
-    },{
-        tableName: 'stock_product_groups',
-        createdAt: false,
-        updatedAt: false
-    })
-    return StockProductGroup
-  }
-  
+    },
+    {
+      tableName: 'stock_product_groups',
+      createdAt: false,
+      updatedAt: false,
+    }
+  )
+  return StockProductGroup
+}

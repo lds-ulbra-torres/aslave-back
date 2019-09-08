@@ -4,7 +4,6 @@ export default (sequelize, DataType) => {
       type: DataType.INTEGER(20),
       autoIncrement: true,
       primaryKey: true,
-      allowNull: false,
       validate: {
         notEmpty: true,
       },
@@ -25,14 +24,14 @@ export default (sequelize, DataType) => {
       },
     },
     unit_price_output: {
-      type: DataType.DECIMAL(18,2),
+      type: DataType.DECIMAL(18, 2),
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
     amount_output: {
-      type: DataType.DECIMAL(18,2),
+      type: DataType.DECIMAL(18, 2),
       allowNull: false,
       validate: {
         notEmpty: true,

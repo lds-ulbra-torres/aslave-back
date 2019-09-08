@@ -1,42 +1,36 @@
 import { response, error } from './API'
 
 export default class Controller {
-  constructor (){
-    this.model
-    this.id
+  constructor(Model, ID) {
+    this.model = Model
+    this.id = ID
+  }
+
+  async actionModel (action, res, params) {
+    this.model[action](params)
+    .then( result => response(res, result))
+    .catch(err => error(res, err))
   }
 
   index(req, res) {
-    console.log(this)
-    this.model.findAll()
-      .then( result => response(res, result))
-      .catch( err => error (res, err))  
+    this.actionModel('findAll', res)
   }
 
-  get (req,res){
-    this.model.findAll({ where: { [this.id] : req.params.id}})
-      .then(result => response (res, result))
-      .catch( err => error (res, err))
+  get(req, res) {
+    this.actionModel('findOne', res, { where: { [this.id]: req.params.id } })
   }
 
   store(req, res) {
-    this.model.create(req.body)
-      .then( result => response(res, result))
-      .catch(err => error (res, err))
+    this.actionModel('create', res, req.body)
   }
 
-  update(req,res) {
-    if(req.body[this.id])
-      error(res, {}, `contains ${[this.id]}`)
-    else 
-      this.model.update(req.body, { where: { [this.id] : req.params.id} })
-        .then( result => response(res, result))
-        .catch( err => error(res, err))
+  update(req, res) {
+    if (req.body[this.id]) error(res, {}, `contains ${[this.id]}`)
+    else
+      this.actionModel('update', res, (req.body, { where: { [this.id]: req.params.id } }))
   }
 
   delete(req, res) {
-    this.model.destroy({ where: { [this.id] : req.params.id}})
-      .then( result => response(res, result))
-      .cath( err => error(res,err))
+    this.actionModel('destroy', res, { where: { [this.id]: req.params.id } })
   }
 }
