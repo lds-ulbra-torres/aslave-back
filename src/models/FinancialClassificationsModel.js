@@ -1,4 +1,4 @@
-export default (sequelize, DataType)=> {
+export default (sequelize, DataType) => {
     const FinancialClassifications = sequelize.define('fin_classifications', {
         id_classification: {
             type: DataType.INTEGER,

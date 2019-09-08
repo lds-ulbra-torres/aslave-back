@@ -1,54 +1,40 @@
-import db from '../config/db'
 import { response, error } from './API'
+import Controller from './Controller'
 
-const FinancialReleasesModel = db().models.financial_releases
+import {
+    financial_releases as FinancialReleasesModel,
+    people as PeopleModel,
+    fin_classifications as FinancialClassificationsModel
+} from '../models/FinancialReleasesModel'
 
-export const FinancialReleasesController = {
+export class FinancialReleasesController extends Controller {
+    constructor() {
+        super()
+        this.model = FinancialReleasesModel
+        this.id = 'id_financial_release'
+    }
+
     index(req, res) {
         FinancialReleasesModel.findAll({ include: [{
-            model: db().models.people,
+            model: PeopleModel,
             attributes: ['name']
         },{
-            model: db().models.fin_classifications,
+            model: FinancialClassificationsModel,
             attributes: ['name_classification']
         }] })
-        .then( result => response(res, result) )
-        .catch( erro => error (res, erro) )  
-    },
+            .then(result => response(res, result))
+            .catch(err => error(res, err))
+    }
 
     get (req,res){
         FinancialReleasesModel.findAll({ where: { id_financial_release : req.params.id }, include: [{
-            model: db().models.people,
+            model: PeopleModel,
             attributes: ['name']
         },{
-            model: db().models.fin_classifications,
+            model: FinancialClassificationsModel,
             attributes: ['name_classification']
         }] })
-        .then(result => response (res, result) )
-        .catch( erro => error (res, erro) )
-    },
-
-    store(req, res) {
-        FinancialReleasesModel.create(req.body)
-        .then( result => response(res, result) )
-        .catch(erro => error (res, erro) )
-    },
-
-
-    update( req,res){
-        if(req.body.id_financial_release)
-            error(res, {}, 'conteins id_financial_release')
-        else 
-            FinancialReleasesModel.update(req.body, { where: { id_financial_release : req.params.id} })
-                .then( result => response(res, result) )
-                .catch( erro => error(res,erro) )
-    },
-
-    delete(req, res) {
-        FinancialReleasesModel.destroy({
-            where: { id_financial_release : req.params.id}})
-            .then( result => response(res, result) )
-            .catch( erro => error(res, erro) )
+        .then(result => response(res, result))
+        .catch(err => error(res, err))
     }
-
 }

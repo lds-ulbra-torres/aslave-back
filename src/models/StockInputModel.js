@@ -1,5 +1,4 @@
 export default (sequelize, DataType) => {
-
   const StockInput = sequelize.define('stock_input', {
     id_stock: {
       type: DataType.INTEGER(20),

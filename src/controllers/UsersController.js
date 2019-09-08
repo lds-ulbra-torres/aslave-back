@@ -1,47 +1,38 @@
-import db from '../config/db'
 import { jwtSecret } from '../config/config'
 import { response, error } from './API'
-import jwt from "jwt-simple";
+import jwt from "jwt-simple"
+import md5 from 'md5'
 
-const  UserModel = db().models.user
+import Controller from './Controller'
+import { user as UserModel } from '../models'
 
-export const UsersController  = {
-    
+export class UsersController extends Controller {
+    constructor (){
+        super()
+        this.model = UserModel
+        this.id = 'id_user'
+    }
+
     index (req, res) {
-        UserModel.findAll({  attributes: { exclude: ['password'] } })
+        this.model.findAll({  attributes: { exclude: ['password'] } })
         .then( result => response(res, result) )
         .catch( erro => error(res, erro) )
-    },
+    }
 
     get (req, res) {
-        UserModel.findAll({ where : { id_user : req.params.id },  attributes: { exclude: ['password'] } })
+        this.model.findAll({ where : { id_user : req.params.id },  attributes: { exclude: ['password'] } })
         .then( result => response(res, result) )
         .catch( erro => error(res, erro) )
-    },
-
-    store (req, res) {
-        UserModel.create(req.body)
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
-    },
-
-    update (req, res) {
-        if(req.body.id_user)
-            error(res, {}, 'conteins id_user')
-        else
-            UserModel.update(req.body, { where : { id_user : req.params.id} })
-            .then( result => response(res, result) )
-            .catch( erro => error(res, erro) )
-    },
-
-    delete (req, res) {
-        UserModel.destroy({ where : { id_user : req.params.id} })
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
-    },
+    }
 
     validate (req, res) { 
-        UserModel.validate(req.body.login, req.body.password)
+        let login = req.body.login, password = req.body.password
+        password = md5(password)
+        
+        this.model.findOne({
+          attributes: ['id_user'],
+          where : { login, password }
+        })
         .then(result => {
             if(result)
                 response(res, {token: jwt.encode( { id: result.id_user } , jwtSecret) } ) 

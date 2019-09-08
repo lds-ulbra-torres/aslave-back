@@ -1,18 +1,26 @@
-import db from '../config/db'
 import { response, error } from './API'
+import Controller from './Controller'
 
-const  StockOutputModel = db().models.stock_output_products
+import { 
+    stock_output_products as StockOutputModel,
+    user as UserModel
+} from '../models'
 
-export const OutputStocksController  = {
-    
+export class OutputStocksController extends Controller {
+    constructor (){
+        super()
+        this.model = StockOutputModel
+        this.id = 'id_stock'
+    }
+
     index (req, res) {
         StockOutputModel.findAll({attributes: ['id_stock','createdAt', 'unit_price_output', 'amount_output', 'unit_measurement'], include: [{
-            model: db().models.user,
+            model: UserModel,
             attributes: ['full_name']
         }] })
         .then( result => response(res, result) )
         .catch( erro => error(res, erro) )
-    },
+    }
 
     get (req, res) {
         StockOutputModel.findOne({ where : { id_stock : req.params.id },
@@ -20,23 +28,5 @@ export const OutputStocksController  = {
         })
         .then( result => response(res, result) )
         .catch( erro => error(res, erro) )
-    },
-
-    store (req, res) {  
-        StockOutputModel.create(req.body)
-        .then( respo => response(res, respo) )
-        .catch( erro => error(res, erro) )
-    },
-
-    update (req, res) {
-        StockOutputModel.update(req.body, { where: { id_stock : req.params.id } })
-        .then( respo => response(res, respo) )
-        .catch( erro => error(res, erro) )
-    },
-
-    delete (req, res) {
-        StockOutputModel.destroy({ where : { id_stock : req.params.id} })
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
-    },
+    }
 }

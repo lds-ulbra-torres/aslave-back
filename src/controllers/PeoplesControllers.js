@@ -1,41 +1,17 @@
-import db from '../config/db'
 import { response, error } from './API'
+import Controller from './Controller'
 
-const PeopleModel = db().models.people;
+import { people as PeopleModel } from '../models'
 
-export const PeopleControllers = {
-
-    index (req,res) {
-        PeopleModel.findAll()
-        .then(result => response (res, result) )
-        .catch( error=> error (res, erro) )
-    },
-
+export class PeopleControllers extends Controller {
+    constructor () {
+        super()
+        this.model = PeopleModel
+        this.id = 'id_people'
+    }
     get (req, res) {
-        PeopleModel.getById( req.params.id )
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
-    },
-
-    store (req, res) {
-        PeopleModel.create(req.body)
-        .then( result => response(res,result)
-             )
-         .catch( erro => error(res,erro) )
-    },
-
-    update (req, res) {
-        if( req.params.id_people )
-            error(res, {}, "conteins id_people ")
-        else
-            PeopleModel.update(req.body, { where : { id_people : req.params.id} })
-            .then( result => response(res, result) )
-            .catch( erro => error(res, erro) )
-    },
-
-    delete (req, res) {
-        PeopleModel.destroy({ where : { id_people : req.params.id} })
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
-    },
+        PeopleModel.getById(req.params.id)
+        .then(result => response(res, result))
+        .catch(err => error(res, err))
+    }
 }

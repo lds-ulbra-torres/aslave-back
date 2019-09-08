@@ -1,4 +1,4 @@
-export default (sequelize , DataType) =>{
+export default (sequelize , DataType) => {
     const FinancialReleases = sequelize.define('financial_releases', {
         id_financial_release:{
             type: DataType.INTEGER(4),
@@ -77,6 +77,7 @@ export default (sequelize , DataType) =>{
     })
     sequelize.models.fin_classifications.hasMany(FinancialReleases, {foreignKey : 'id_classification', targetKey:'id_classification' })
     FinancialReleases.belongsTo(sequelize.models.fin_classifications, {foreignKey : 'id_classification', targetKey:'id_classification' })
+    
     FinancialReleases.search = query => {
         return FinancialReleases.findAll({ 
             include : [{

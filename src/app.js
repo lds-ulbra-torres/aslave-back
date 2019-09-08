@@ -5,9 +5,12 @@ import helmet from 'helmet'
 
 const app = express()
 
-app.db = require('./config/db')()
+// const models = require('./models')
+// models.sequelize.sync()
+// .then(() => console.log('Nice! DB looks fine'))
+// .catch( error => console.log(error))
 
-// Middlewares
+// Middleware
     app.use(helmet())
     app.use(compression())
     //Body-parse settings

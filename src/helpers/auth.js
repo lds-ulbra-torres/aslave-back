@@ -1,42 +1,24 @@
-import config from '../config/config';
-import db from '../config/db';
+import config from '../config/config'
 import passport from "passport"
 import {Strategy, ExtractJwt} from "passport-jwt"
+import { user as UserModel} from '../models'
 
 module.exports = () => {
-    
-    const opts = {}
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-    opts.secretOrKey = config.jwtSecret
-    opts.jwtSession = config.jwtSession
+    const opts = {
+        jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey : config.jwtSecret,
+        jwtSession : config.jwtSession,
+    }
 
-    const Users = db().models.user
-    
-    const strategy = new Strategy(opts,
-    (jwt_payload, done) => {
-        Users.findOne({
-            where : {id_user: jwt_payload.id}, 
-            attributes: ['id_user'],            
-        })
-        .then( user => {
-            if (user)
-                return done(null, user = { id : user.id_user })
-            else
-                return done(null, false)
-        })
-        .catch(error => {
-            done(error, null)
-        })
+    const strategy = new Strategy(opts, (jwt_payload, done) => {
+        UserModel.findOne({ where : {id_user: jwt_payload.id}, attributes: ['id_user']})
+        .then(user => user ? done(null, { id : user.id_user }) : done(null, false))
+        .catch(error => done(error, null))
     })
-    
+
     passport.use(strategy)
-    
     return {
-        initialize: () => {
-            return passport.initialize()
-        },
-        authenticate: () => {
-            return passport.authenticate("jwt", opts.jwtSession)
-        }
+        initialize: () => passport.initialize(),
+        authenticate: () => passport.authenticate("jwt", opts.jwtSession),
     }
 }

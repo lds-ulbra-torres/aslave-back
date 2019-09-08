@@ -1,51 +1,13 @@
-import db from '../config/db'
-import { response, error } from './API'
+import Controller from './Controller'
 
-const FinancialClassificationsModel = db().models.fin_classifications
+import {
+    fin_classifications as FinancialClassificationsModel
+} from '../models/FinancialReleasesModel'
 
-
-export const FinancialClasificarionsController  = {
-    index(req, res) {
-        FinancialClassificationsModel.findAll()
-        .then(result => response(res, result))
-        .catch( erro => error(res, erro) )
-    },
-
-    get (req,res){
-        FinancialClassificationsModel.findAll({
-            where:{
-                id_classification: req.params.id
-            }
-        })
-        .then( result => response(res,result) )
-        .catch(erro => error (res, erro) )
-    },
-
-    store(req,res){
-        FinancialClassificationsModel.create(req.body)
-        .then( result => response(res, result) )
-        .catch(erro => error (res, erro) )
-
-    },
-
-    update(req,res){
-        if(req.body.id_classification){
-            error(res, {}, 'id_classification')}
-        else{
-            FinancialClassificationsModel.update
-            (req.body, { where:{
-                id_classification:req.params.id
-            }})
-            .then( result => response (res, result) )
-            .catch(erro =>error (res, erro) )
-        }   
-    
-    },
-
-    delete(req, res) {
-        FinancialClassificationsModel.destroy({ where: { id_classification : req.params.id}})
-        .then( (result) => response(res, result) )
-        .catch( erro => error(res, erro) )
+export class FinancialClassificationsController extends Controller {
+    constructor() {
+        super()
+        this.model = FinancialClassificationsModel
+        this.id = 'id_classification'
     }
-    
 }

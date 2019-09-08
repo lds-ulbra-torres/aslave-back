@@ -1,56 +1,56 @@
-import db from '../config/db'
 import { response, error } from './API'
+import Controller from './Controller'
 
-const  ProductsModel = db().models.stock_products
-const  InputProductsModel = db().models.stock_input_products
+import { 
+    stock_products as ProductsModel, 
+    stock_input_products as InputProductsModel 
+} from '../models'
 
-export const ProductsController  = {
-    
-    index (req, res) {
-        ProductsModel.getAll()
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
-    },
+export class ProductsController extends Controller {
+    constructor () {
+        super()
+        this.model = ProductsModel
+        this.id = 'id_group'
+    }
 
     get (req, res) {
-        ProductsModel.getById( req.params.id )
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
-    },
+        this.model.getById(req.params.id)
+            .then(result => response(res, result))
+            .catch(err => error(res, err))
+    }
 
     getByCategory (req, res) {
-        ProductsModel.findAll({ where : { id_group : req.params.id }})
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
-    },
+        this.model.findAll({ where : { id_group : req.params.id }})
+            .then(result => response(res, result))
+            .catch(err => error(res, err))
+    }
 
     store (req, res) {
         req.body.amount = 0
-        ProductsModel.create(req.body)
-        .then( result => response(res, result) )
-        .catch( erro => error(res, erro) )
-    },
+        this.model.create(req.body)
+            .then(result => response(res, result))
+            .catch(err => error(res, err))
+    }
 
     update (req, res) {
         if(req.body.amount || req.body.id_product )
-            error(res, {}, "conteins amount or id_product ")
+            error(res, {}, "contains amount or id_product ")
         else
-            ProductsModel.update(req.body, { where : { id_product : req.params.id} })
-            .then( result => response(res, result) )
-            .catch( erro => error(res, erro) )
-    },
+            this.model.update(req.body, { where : { id_product : req.params.id} })
+                .then(result => response(res, result))
+                .catch(err => error(res, err))
+    }
 
     delete (req, res) {
         InputProductsModel.count({ where : { id_product : req.params.id} })
-        .then( count => {
-            if(count === 0)
-                ProductsModel.destroy({ where : { id_product : req.params.id} })
-                .then( result => response(res, result) )
-                .catch( erro => error(res, erro) )
-            else
-                error(res, {}, "Product is being used")
-        })
-        .catch( erro => error(res, erro) )
-
-    },
+            .then( count => {
+                if(count === 0)
+                    this.model.destroy({ where : { id_product : req.params.id} })
+                        .then(result => response(res, result))
+                        .catch(err => error(res, err))
+                else
+                    error(res, {}, "Product is being used")
+            })
+            .catch(err => error(res, err))
+    }
 }
