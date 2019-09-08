@@ -129,16 +129,13 @@ export default (sequelize, DataType) => {
       // PARSE
       let productDB = JSON.parse(JSON.stringify(inputProducts))
       let productReq = data.stock_input_products
-      // FIND THE DIFFERENCE BETWEEN LIST
-      let deleteProducts = containsAButNotB(productDB, productReq)
-      let addProducts = containsAButNotB(productReq, productDB)
       // UPGRADES STOCKED PRODUCTS
       await sequelize.models.stock_input_products.deleteProducts(
-        deleteProducts,
+        containsAButNotB(productDB, productReq),
         id_stock
       )
       await sequelize.models.stock_input_products.addProducts(
-        addProducts,
+        containsAButNotB(productReq, productDB),
         id_stock
       )
       return true
