@@ -6,7 +6,7 @@ export default class Controller {
     this.id = ID
   }
 
-  async actionModel(action, res, params) {
+  actionModel(action, res, params) {
     this.model[action](params)
       .then(result => response(res, result))
       .catch(err => error(res, err))

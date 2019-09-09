@@ -1,4 +1,4 @@
-import { response, error } from './API'
+import { error } from './API'
 import Controller from './Controller'
 
 import {
@@ -12,7 +12,7 @@ export class InputStocksController extends Controller {
   }
 
   index(req, res) {
-    StockInputModel.findAll({
+    this.actionModel('findAll', res, {
       include: [
         {
           model: PeopleModel,
@@ -20,34 +20,23 @@ export class InputStocksController extends Controller {
         },
       ],
     })
-      .then(result => response(res, result))
-      .catch(err => error(res, err))
   }
 
   get(req, res) {
-    StockInputModel.getOne(req.params.id)
-      .then(result => response(res, result))
-      .catch(err => error(res, err))
+    this.actionModel('getOne', res, req.params.id)
   }
 
   store(req, res) {
-    StockInputModel.creator(req.body)
-      .then(result => response(res, result))
-      .catch(err => error(res, err))
+    this.actionModel('creator', res, req.body)
   }
 
   update(req, res) {
     if (req.body.amount || req.body.id_group || req.body.id_product)
       error(res, {}, 'contains amount or id_group or id_product ')
-    else
-      StockInputModel.updater(req.body, req.params.id)
-        .then(result => response(res, result))
-        .catch(err => error(res, err))
+    else this.actionModel('updater', res, (req.body, req.params.id))
   }
 
-  delete(req, res) {
-    StockInputModel.delete(req.params.id)
-      .then(result => response(res, result))
-      .catch(err => error(res, err))
+  _delete(req, res) {
+    this.actionModel('delete', res, req.params.id)
   }
 }

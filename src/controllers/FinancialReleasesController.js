@@ -13,7 +13,7 @@ export class FinancialReleasesController extends Controller {
   }
 
   index(req, res) {
-    FinancialReleasesModel.findAll({
+    this.actionModel('findAll', res, {
       include: [
         {
           model: PeopleModel,
@@ -25,12 +25,10 @@ export class FinancialReleasesController extends Controller {
         },
       ],
     })
-      .then(result => response(res, result))
-      .catch(err => error(res, err))
   }
 
   get(req, res) {
-    FinancialReleasesModel.findAll({
+    this.actionModel('findAll', res, {
       where: { id_financial_release: req.params.id },
       include: [
         {
@@ -43,7 +41,5 @@ export class FinancialReleasesController extends Controller {
         },
       ],
     })
-      .then(result => response(res, result))
-      .catch(err => error(res, err))
   }
 }

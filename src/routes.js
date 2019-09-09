@@ -25,21 +25,16 @@ import {
 
 // Endpoint functions common to all
 const routers = (name, controller) => {
-  controller.index
-    ? router.get(`/${name}`, (req, res) => controller.index(req, res))
-    : null
-  controller.get
-    ? router.get(`/${name}/:id`, (req, res) => controller.get(req, res))
-    : null
-  controller.store
-    ? router.post(`/${name}`, (req, res) => controller.store(req, res))
-    : null
-  controller.update
-    ? router.put(`/${name}/:id`, (req, res) => controller.update(req, res))
-    : null
-  controller.delete
-    ? router.delete(`/${name}/:id`, (req, res) => controller.delete(req, res))
-    : null
+  const route = (action, method, routeName) =>
+    controller[action]
+      ? router[method](routeName, (req, res) => controller[action](req, res))
+      : null
+
+  route('index', 'get', `/${name}`)
+  route('get', 'get', `/${name}/:id`)
+  route('store', 'post', `/${name}`)
+  route('update', 'put', `/${name}/:id`)
+  route('delete', 'delete', `/${name}/:id`)
 }
 
 // EndPoints

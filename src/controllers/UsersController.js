@@ -11,21 +11,11 @@ export class UsersController extends Controller {
     super(UserModel, 'id_user')
   }
 
-  index(req, res) {
-    this.model
-      .findAll({ attributes: { exclude: ['password'] } })
-      .then(result => response(res, result))
-      .catch(err => error(res, err))
-  }
-
   get(req, res) {
-    this.model
-      .findAll({
-        where: { id_user: req.params.id },
-        attributes: { exclude: ['password'] },
-      })
-      .then(result => response(res, result))
-      .catch(err => error(res, err))
+    this.actionModel('findAll', res, {
+      where: { id_user: req.params.id },
+      attributes: { exclude: ['password'] },
+    })
   }
 
   validate(req, res) {

@@ -1,4 +1,3 @@
-import { response, error } from './API'
 import Controller from './Controller'
 
 import {
@@ -12,7 +11,7 @@ export class OutputStocksController extends Controller {
   }
 
   index(req, res) {
-    StockOutputModel.findAll({
+    this.actionModel('findAll', res, {
       attributes: [
         'id_stock',
         'createdAt',
@@ -27,12 +26,10 @@ export class OutputStocksController extends Controller {
         },
       ],
     })
-      .then(result => response(res, result))
-      .catch(erro => error(res, erro))
   }
 
   get(req, res) {
-    StockOutputModel.findOne({
+    this.actionModel('findOne', res, {
       where: { id_stock: req.params.id },
       include: [
         {
@@ -42,7 +39,5 @@ export class OutputStocksController extends Controller {
         },
       ],
     })
-      .then(result => response(res, result))
-      .catch(erro => error(res, erro))
   }
 }
