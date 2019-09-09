@@ -12,12 +12,16 @@ export default class Controller {
       .catch(err => error(res, err))
   }
 
+  actionModelByID(action, res) {
+    this.actionModel(action, res)
+  }
+
   index(req, res) {
     this.actionModel('findAll', res)
   }
 
   get(req, res) {
-    this.actionModel('findOne', res, { where: { [this.id]: req.params.id } })
+    this.actionModelByID('findOne', res)
   }
 
   store(req, res) {
@@ -36,6 +40,6 @@ export default class Controller {
   }
 
   delete(req, res) {
-    this.actionModel('destroy', res, { where: { [this.id]: req.params.id } })
+    this.actionModelByID('destroy', res)
   }
 }
